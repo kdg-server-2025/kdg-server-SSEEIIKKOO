@@ -1,6 +1,6 @@
 FROM golang:1.24-alpine
 
-COPY main.go ./
+COPY unti.go ./
 
 RUN go build unti.go
 
