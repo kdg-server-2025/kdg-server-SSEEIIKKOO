@@ -1,9 +1,7 @@
-# Use the official Ubuntu 22.04 base image
-FROM ubuntu:22.04
+FROM golang:1.24-alpine
 
+COPY *.go ./
 
-RUN apt-get update
-RUN apt-get install -y nginx
+RUN go build unti.go
 
-# Port
-EXPOSE 22 80 
+CMD ["./unti"]
