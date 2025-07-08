@@ -1,0 +1,32 @@
+services:
+  db:
+    image: mirror.gcr.io/mariadb:11.8.1-ubi9-rc
+    container_name: wordpress_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_DATABASE: 'wordpress'
+      MYSQL_USER: 'wordpress_user'
+      MYSQL_PASSWORD: 'password'
+    volumes:
+      - db_data:/var/lib/mysql
+
+  wordpress:
+    image: mirror.gcr.io/wordpress:6.8.1-php8.1-apache
+    container_name: wordpress_app
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: 'db:3306'
+      WORDPRESS_DB_USER: 'wordpress_user'
+      WORDPRESS_DB_PASSWORD: 'password'
+      WORDPRESS_DB_NAME: 'wordpress'
+    volumes:
+      - wp_data:/var/www/html
+
+volumes:
+  db_data:
+  wp_data:
